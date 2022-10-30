@@ -59,9 +59,10 @@ def get_subnet_mask_value(slash):
     return: 0xfffffe00 0b11111111111111111111111000000000 4294966784
     """
     ip, network_bits = slash.split('/')
-    host = 32 - int(network_bits)
-    mask = s.inet_aton(struct.pack('!L', (1 << 32) - (1 << host)))
-    return mask
+    network = int(network_bits[1])
+    host = 32 - network
+    mask = (2**network) - 1
+    return mask << host
 
 def ips_same_subnet(ip1, ip2, slash):
     """
@@ -90,10 +91,9 @@ def ips_same_subnet(ip1, ip2, slash):
     ip1_val = ipv4_to_value(ip1)
     ip2_val = ipv4_to_value(ip2)
     mask = get_subnet_mask_value(slash)
-    if ip1_val and ip2_val == mask:
-        return True
-    else:
-        return False
+    net1 = ip1_val & mask
+    net2 = ip2_val & mask
+    return (net1 == net2)
     
 
 def get_network(ip_value, netmask):
@@ -150,7 +150,11 @@ def find_router_for_ip(routers, ip):
     ip: "1.2.5.6"
     return: None
     """
+    for ip_value, mask_value in routers.items():
+        if ips_same_subnet(ip_value, ip, mask_value['netmask']):
+            return ip_value
     
+
     
 
 # Uncomment this code to have it run instead of the real main.
@@ -161,7 +165,17 @@ def my_tests():
     print("This is the result of my custom tests")
     print("-------------------------------------")
 
-    # Add custom test code here
+
+    routers = {
+        "1.2.3.1": {
+            "netmask": "/24"
+        },
+        "1.2.4.1": {
+            "netmask": "/24"
+        }
+    }
+    ip = "1.2.5.6"
+    print(find_router_for_ip(routers, ip))
 
 
 ## -------------------------------------------
