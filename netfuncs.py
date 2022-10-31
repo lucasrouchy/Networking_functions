@@ -163,7 +163,7 @@ def find_router_for_ip(routers, ip):
 #     print("This is the result of my custom tests")
 #     print("-------------------------------------")
 
-
+#     
 #     routers = {
 #         "1.2.3.1": {
 #             "netmask": "/24"
@@ -173,6 +173,8 @@ def find_router_for_ip(routers, ip):
 #         }
 #     }
 #     ip = "1.2.5.6"
+    #  res = print(ipv4_to_value(ip))
+    # print(value_to_ipv4(res))
 #     print(find_router_for_ip(routers, ip))
 
 
