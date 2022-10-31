@@ -17,8 +17,9 @@ def ipv4_to_value(ipv4_addr):
     ipv4_addr: "1.2.3.4"
     return:    0x01020304 0b00000001000000100000001100000100 16909060
     """
-
+    # netaddr is a module that will do this aswell.
     byteIP = s.inet_aton(ipv4_addr)
+    # the !L just specifiecs the format to be not be little endian.
     return struct.unpack('!L', byteIP)[0]
 
 
