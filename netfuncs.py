@@ -106,9 +106,7 @@ def get_network(ip_value, netmask):
     netmask:  0xffffff00
     return:   0x01020300
     """
-    ip = value_to_ipv4(ip_value)
-    ip_bin = ipv4_to_value(ip)
-    net = ip_bin[0:32 -(32-netmask)]
+    net = ip_value & netmask
     return net
     
 
@@ -160,22 +158,22 @@ def find_router_for_ip(routers, ip):
 # Uncomment this code to have it run instead of the real main.
 # Be sure to comment it back out before you submit!
 
-def my_tests():
-    print("-------------------------------------")
-    print("This is the result of my custom tests")
-    print("-------------------------------------")
+# def my_tests():
+#     print("-------------------------------------")
+#     print("This is the result of my custom tests")
+#     print("-------------------------------------")
 
 
-    routers = {
-        "1.2.3.1": {
-            "netmask": "/24"
-        },
-        "1.2.4.1": {
-            "netmask": "/24"
-        }
-    }
-    ip = "1.2.5.6"
-    print(find_router_for_ip(routers, ip))
+#     routers = {
+#         "1.2.3.1": {
+#             "netmask": "/24"
+#         },
+#         "1.2.4.1": {
+#             "netmask": "/24"
+#         }
+#     }
+#     ip = "1.2.5.6"
+#     print(find_router_for_ip(routers, ip))
 
 
 ## -------------------------------------------
@@ -245,13 +243,13 @@ def print_ip_routers(routers, src_dest_pairs):
         print(f" {router_ip:>15s}: {router_host_map[router_ip]}")
 
 def main(argv):
-    try:
-        my_tests()
-        return 0
-    except NameError as e:
-        if e.name != "my_tests":
-            raise e
-
+    # try:
+    #     my_tests()
+    #     return 0
+    # except NameError as e:
+    #     if e.name != "my_tests":
+    #         raise e
+    
     try:
         router_file_name = argv[1]
     except:
