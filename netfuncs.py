@@ -19,7 +19,7 @@ def ipv4_to_value(ipv4_addr):
     """
     # netaddr is a module that will do this aswell.
     byteIP = s.inet_aton(ipv4_addr)
-    # the !L just specifiecs the format to be not be little endian.
+    # the !L specifiecs the format to be not be little endian and it us the long format to allow for enough bytes.
     return struct.unpack('!L', byteIP)[0]
 
 
